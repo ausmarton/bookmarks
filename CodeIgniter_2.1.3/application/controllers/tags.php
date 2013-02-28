@@ -5,17 +5,19 @@ class Tags extends CI_Controller {
     	function __construct()
     	{
         	parent::__construct();
+		$this->load->model('tag');
     	}
 
 	public function index()
 	{
-		$this->load->model('tag');
-		$data['tags'] = $this->Tag->all();
+		$tag = new Tag();
+		$data['tags'] = $tag->get();
 		$this->load->view('tags',$data);
 	}
 	public function save() {
 		$tag = new Tag();
-		$tag->id = $this->input->post('id',TRUE);
+		if(trim($this->input->post('id',TRUE)) != "")
+			$tag->id = $this->input->post('id',TRUE);
 		$tag->name = $this->input->post('name',TRUE);
 		if($tag->save()) {
 			redirect(site_url() . "/tags/",'location');
@@ -29,9 +31,10 @@ class Tags extends CI_Controller {
 	}
 	public function edit($id)
 	{
+		$tags = new Tag();
 		$data['type'] = "edit";
-		$this->load->model('tag');
-		$tag = $this->Tag->get($id);
+		$tags->where(array('id' => $id));
+		$tag = $tags->get();
 		$data['id'] = $tag->id;
 		$data['name'] = $tag->name;
 		$this->load->view('save_tag',$data);
@@ -40,7 +43,7 @@ class Tags extends CI_Controller {
 	{
 		$tag = new Tag();
 		$tag->id = $this->uri->segment(3);
-		if($tag->remove()) {
+		if($tag->delete()) {
 			redirect(site_url() . "/tags/",'location');
 		}
 	}

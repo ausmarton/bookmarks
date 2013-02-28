@@ -16,11 +16,26 @@
 	padding: 0.5em;
 	border: 1px solid gray;
 }
+.bookmark .tags {
+	margin: 0.2em;
+}
+.bookmark .tags .tag {
+	padding: 0 0.3em;
+	border: 1px solid gray;
+	background-color: #ddd;
+}
 </style>
-<?php foreach($bookmarks as $bookmark) : ?>
+<?php include "menu.php"; ?>
+<?php foreach($bookmarks as $bookmark) : ?> 
 	<div class="bookmark">
-		<div class="name"><?php echo anchor($bookmark->url,$bookmark->name); ?></div>
+		<div class="name"><?php echo anchor(site_url() . "/bookmarks/edit/" . $bookmark->id ,$bookmark->name); ?></div>
 		<div class="url"><?php echo anchor($bookmark->url,$bookmark->url); ?></div>
+		<div class="tags">
+			<?php // $bookmark->tag->get(); ?>
+			<?php foreach($bookmark->tag->get() as $tag) : ?>
+				<span class="tag"><?php echo $tag->name ?></span>
+			<?php endforeach; ?>
+		</div>
 		<div class="action"><?php echo anchor(site_url() . "/bookmarks/remove/" . $bookmark->id,"Remove"); ?></div>
 	</div>
 <?php endforeach; ?>

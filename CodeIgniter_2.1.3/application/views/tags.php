@@ -14,9 +14,10 @@
 	border: 1px solid gray;
 }
 </style>
+<?php include "menu.php"; ?>
 <?php foreach($tags as $tag) : ?>
 	<div class="tag">
-		<div class="name"><?php echo anchor(site_url() . "/bookmarks/tag/" . $tag->id,$tag->name); ?></div>
+		<div class="name"><?php echo anchor(site_url() . "/bookmarks/tag/" . $tag->name,$tag->name); ?></div>
 		<div class="action"><?php echo anchor(site_url() . "/tags/remove/" . $tag->id,"Remove"); ?></div>
 	</div>
 <?php endforeach; ?>

@@ -1,3 +1,4 @@
+<?php include "menu.php"; ?>
 <?php echo form_open(site_url() . "/tags/save") ;?>
 	<?php if($type == "edit") : ?>
 		<div>
