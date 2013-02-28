@@ -109,7 +109,7 @@ $autoload['language'] = array();
 |
 */
 
-$autoload['model'] = array('Bookmark');
+$autoload['model'] = array('Bookmark','Tag');
 
 
 /* End of file autoload.php */

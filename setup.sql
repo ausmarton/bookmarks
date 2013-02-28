@@ -14,3 +14,19 @@ CREATE TABLE bookmarking.bookmarks (
 	url VARCHAR(255) NOT NULL,
 	PRIMARY KEY(id)
 );
+
+CREATE TABLE bookmarking.tags (
+	id INT NOT NULL AUTO_INCREMENT,
+	name VARCHAR(255) NOT NULL,
+	PRIMARY KEY(id)
+);
+
+INSERT INTO bookmarking.bookmarks(name,url) VALUES("First Bookmark","http://www.google.com/search");
+INSERT INTO bookmarking.bookmarks(name,url) VALUES("Second Bookmark","http://www.yahoo.com/search");
+INSERT INTO bookmarking.bookmarks(name,url) VALUES("Third Bookmark","http://www.bing.com/search");
+INSERT INTO bookmarking.bookmarks(name,url) VALUES("Fourth Bookmark","http://www.search.com/search");
+
+INSERT INTO bookmarking.tags(name) VALUES("Java");
+INSERT INTO bookmarking.tags(name) VALUES("PHP");
+INSERT INTO bookmarking.tags(name) VALUES("Cycling");
+INSERT INTO bookmarking.tags(name) VALUES("Database");
