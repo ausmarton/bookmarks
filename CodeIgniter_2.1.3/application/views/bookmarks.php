@@ -28,7 +28,7 @@
 <?php include "menu.php"; ?>
 <?php foreach($bookmarks as $bookmark) : ?> 
 	<div class="bookmark">
-		<div class="name"><?php echo anchor(site_url() . "/bookmarks/edit/" . $bookmark->id ,$bookmark->name); ?></div>
+		<div class="name"><?php echo anchor(site_url() . "/bookmarks/" . $bookmark->id ."/edit",$bookmark->name); ?></div>
 		<div class="url"><?php echo anchor($bookmark->url,$bookmark->url); ?></div>
 		<div class="tags">
 			<?php // $bookmark->tag->get(); ?>
@@ -36,6 +36,8 @@
 				<span class="tag"><?php echo $tag->name ?></span>
 			<?php endforeach; ?>
 		</div>
-		<div class="action"><?php echo anchor(site_url() . "/bookmarks/remove/" . $bookmark->id,"Remove"); ?></div>
+		<form action="<?php echo site_url() . "/bookmarks/" . $bookmark->id . "/delete"; ?>" method="POST">
+			<input type="submit" value="Remove"></input>
+		</form>
 	</div>
 <?php endforeach; ?>

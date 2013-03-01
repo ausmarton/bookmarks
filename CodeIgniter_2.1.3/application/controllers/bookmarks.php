@@ -1,8 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Bookmarks extends CI_Controller {
-
-	public $has_many = array('tag');
 	
     	function __construct()
     	{
@@ -10,7 +8,7 @@ class Bookmarks extends CI_Controller {
 		$this->load->model('Bookmark');
 		$this->load->model('Tag');
     	}
-
+//TODO:
 	public function tag($tag_name) {
 		$tag_model = new Tag();
 		$tag_model->where(array('name' => $tag_name));
@@ -19,16 +17,22 @@ class Bookmarks extends CI_Controller {
 		$this->load->view('bookmarks',$data);
 	}
 
-	public function index()
+	public function get_index()
 	{
 		$bookmark = new Bookmark();
 		$data['bookmarks'] = $bookmark->get();
 		$this->load->view('bookmarks',$data);
 	}
-	public function save() {
+	public function post_create(){
 		$bookmark = new Bookmark();
-		if(trim($this->input->post('id',TRUE)) != "")
-			$bookmark->id = $this->input->post('id',TRUE);
+		$this->save($bookmark);
+	}
+	public function post_update($id){
+		$bookmark = new Bookmark();
+		$bookmark->id = $id;
+		$this->save($bookmark);
+	}
+	private function save($bookmark) {
 		$bookmark->name = $this->input->post('name',TRUE);
 		$bookmark->url = $this->input->post('url',TRUE);
 		if($bookmark->save()) {
@@ -41,7 +45,8 @@ class Bookmarks extends CI_Controller {
 			redirect(site_url() . "/bookmarks/",'location');
 		}
 	}
-	public function add()
+
+	public function get_new()
 	{
 		$data['type'] = "create";
 		$data['name'] = "";
@@ -57,7 +62,8 @@ class Bookmarks extends CI_Controller {
 			$all_tags[$tag->id] = $tag->name;
 		return $all_tags;	
 	}
-	public function edit($id)
+
+	public function get_edit($id)
 	{
 		$data['type'] = "edit";
 		$this->load->model('bookmark');
@@ -75,10 +81,11 @@ class Bookmarks extends CI_Controller {
 		$data['url'] = $bookmark->url;
 		$this->load->view('save_bookmark',$data);
 	}
-	public function remove($id)
+
+	public function post_delete($id)
 	{
 		$bookmark = new Bookmark();
-		$bookmark->id = $this->uri->segment(3);
+		$bookmark->id = $id;
 		if($bookmark->delete()) {
 			redirect(site_url() . "/bookmarks/",'location');
 		}

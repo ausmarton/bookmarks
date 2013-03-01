@@ -41,6 +41,12 @@
 $route['default_controller'] = "welcome";
 $route['404_override'] = '';
 
+$route['bookmarks'] = ($_SERVER['REQUEST_METHOD'] == 'GET') ? 'bookmarks/get_index' : 'bookmarks/post_create';
+$route['bookmarks/new'] = 'bookmarks/get_new';
+$route['bookmarks/(:num)'] = ($_SERVER['REQUEST_METHOD'] == 'GET') ? "bookmarks/get_show/$1" : "bookmarks/post_update/$1";
+$route['bookmarks/(:num)/edit'] = "bookmarks/get_edit/$1";
+$route['bookmarks/(:num)/confirm_delete'] = "bookmarks/post_confirm_delete/$1";
+$route['bookmarks/(:num)/delete'] = "bookmarks/post_delete/$1";
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
