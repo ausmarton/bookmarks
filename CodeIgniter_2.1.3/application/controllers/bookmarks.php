@@ -36,11 +36,23 @@ class Bookmarks extends CI_Controller {
 		$bookmark->name = $this->input->post('name',TRUE);
 		$bookmark->url = $this->input->post('url',TRUE);
 		if($bookmark->save()) {
-			foreach($this->input->post('tags',TRUE) as $id) {
+			$bookmark_model = new Bookmark();
+			$bookmark = $bookmark_model->get_by_id($bookmark->id);
+			$existing_tags = array();
+			foreach($bookmark->tag->get() as $tag)
+				$existing_tags[] = $tag->id;
+			$new_tags = $this->input->post('tags',TRUE);
+			$tags_to_be_removed = array_diff($existing_tags, $new_tags);				
+			$tags_to_be_added = array_diff($new_tags, $existing_tags);
+			foreach($tags_to_be_removed as $id) {
 				$tag_model = new Tag();
-				$tag = $tag_model->get(array('id' => $id));
-				$tag->name = $name;
-				$bookmark->save($tag);
+				$tag = $tag_model->where(array('id' => $id))->get();
+				$tag->delete($bookmark);
+			}
+			foreach($tags_to_be_added as $id) {
+				$tag_model = new Tag();
+				$tag = $tag_model->where(array('id' => $id))->get();
+				$tag->save($bookmark);
 			}
 			redirect(site_url() . "/bookmarks/",'location');
 		}
@@ -68,7 +80,7 @@ class Bookmarks extends CI_Controller {
 		$data['type'] = "edit";
 		$this->load->model('bookmark');
 		$bookmark_model = new Bookmark();
-		$bookmark = $bookmark_model->get($id);
+		$bookmark = $bookmark_model->get_by_id($id);
 		
 		$tags = array();
 		foreach($bookmark->tag->get() as $tag)

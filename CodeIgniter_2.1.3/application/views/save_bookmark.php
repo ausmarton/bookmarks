@@ -10,7 +10,7 @@
 	</div>
 	<div>
 		<label for="tags">Tags</label>
-			<?php echo form_multiselect('tags',$all_tags,$tags); ?>
+			<?php echo form_multiselect('tags[]',$all_tags,$tags); ?>
 	</div>
 	<div>
 		<input type="submit" />
