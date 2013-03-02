@@ -161,9 +161,11 @@ body {
 
 #bookmarks li .add-tag {
 	display: inline-block;
-	width: 30px;
-	height: 10px;
+	font-size: 0.6em;
 	background: #ddd;
+	border: 1px solid #aaa;
+	border-radius: 8px;
+	padding: 0 0.4em;
 }
 
 #bookmarks li .tags {
