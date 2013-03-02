@@ -1,6 +1,6 @@
 $(function(){
 
-  var Tag = Backbone.RelationalModel.extend({
+  var Tag = Backbone.Model.extend({
     urlRoot: "/codeigniter/index.php/tags",
     defaults: function() {
       return {
@@ -119,16 +119,44 @@ $(function(){
     }
   });
 
-  var Bookmark = Backbone.RelationalModel.extend({
+	var AddTagView = TagView.extend({
+		render:function (eventName) {
+      $(this.el).html(this.template(this.model.toJSON()));
+      return this;
+    },
+		events: {
+      "keypress .edit-tag"  : "updateOnEnter"
+    },
+		saveTag:function () {
+			var tag_name = $(this.el).children('.edit-tag').val();
+			var matching_tags = app.allTags.where({name: tag_name});
+			var tag;			
+			if(matching_tags.length == 0) {
+        this.model.set({
+          name:tag_name,				  	
+        });
+        tag = app.allTags.create(this.model, {wait: true});
+        console.log(app.allTags);
+				this.render();
+      } else {
+				tag = matching_tags[0];
+      }
+			this.bookmark.get('tags').push(tag);
+			this.bookmark.save();
+    },
+		updateOnEnter: function(e) {
+      if (e.keyCode == 13) this.saveTag();
+    },
+
+    close:function () {
+      $(this.el).unbind();
+      $(this.el).empty();
+    }
+	});
+
+  var Bookmark = Backbone.Model.extend({
 
     urlRoot: "/codeigniter/index.php/bookmarks",
-
-		relations: [{
-			type: Backbone.HasMany,
-			key: 'tags',
-			relatedModel: 'Tag',
-			collectionType: 'TagList'
-		}],
 
     defaults: function() {
       return {
@@ -182,7 +210,14 @@ $(function(){
     template:_.template($('#bookmark-template').html()),
 
     events:{
-      "dblclick .view":"showEdit"
+      "dblclick .view":"showEdit",
+			"dblclick .add-tag":"showAddTag"
+    },
+
+    showAddTag: function() {
+			this.showAddTag = new AddTagView({model: new Tag()});
+			this.showAddTag.bookmark = this.model;
+			$(this.el).children('.add-tag').html(this.showAddTag.render().el);
     },
 
     showEdit: function() {

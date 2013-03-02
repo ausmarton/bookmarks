@@ -159,8 +159,16 @@ body {
 	border-radius: 8px;
 }
 
+#bookmarks li .add-tag {
+	display: inline-block;
+	width: 30px;
+	height: 10px;
+	background: #ddd;
+}
+
 #bookmarks li .tags {
 	padding: 0;
+	display: inline-block;
 }
 
 #bookmarks li .tags li p {

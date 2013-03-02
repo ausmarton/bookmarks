@@ -45,6 +45,7 @@ class Tags extends CI_Controller {
                 $post_data = $this->get_from_JSON();
                 $tag->name = $post_data['name'];
 		$tag->save();
+		//echo json_encode($this->get_JSON(array($tag)));
 	}
 
 	public function add()
