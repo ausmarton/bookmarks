@@ -13,15 +13,18 @@
 
     <header id="header">
 	</header>
-
+<h2 class="bookmarks">Bookmarks</h2><h2 class="all-tags">All Tags</h2>
     <section id="bookmarks">
      
     </section>
 
+	<section id="all-tags">
+	</section>
+
   </div>
 
   <div id="instructions">
-    Double-click to edit a todo.
+    Double-click to edit a bookmark.
   </div>
 
   <script src="/codeigniter/application/assets/js/json2.js"></script>
@@ -40,6 +43,17 @@
 		
 	</div>
   </script>
+
+<script type="text/template" id="tag-view-template">
+	<p class="tag-view" href="<%- id %>"><%- name %></p>
+<div class="edit-tag-text">
+		
+	</div>
+</script>
+
+<script type="text/template" id="tag-edit-template">
+	<input class="edit-tag" type="text" placeholder="Tag Name" value="<%- name %>" />
+</script>
 
 <script type="text/template" id="edit-bookmark-template">
 		<input class="edit-name" type="text" placeholder="Bookmark Name" value="<%- name %>" />

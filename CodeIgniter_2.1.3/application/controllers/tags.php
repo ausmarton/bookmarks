@@ -8,21 +8,45 @@ class Tags extends CI_Controller {
 		$this->load->model('tag');
     	}
 
-	public function index()
+	private function get_JSON($tag_models) {
+                $tags = array();
+                foreach($tag_models as $tag_model) {
+                	$tags[] = array(
+                        	'id' => $tag_model->id,
+                                'name' => $tag_model->name
+                        );
+                }
+                return $tags;
+        }
+
+	private function get_from_JSON() {
+                return json_decode(file_get_contents("php://input"), true);
+        }
+
+
+	public function get_index()
 	{
 		$tag = new Tag();
 		$data['tags'] = $tag->get();
-		$this->load->view('tags',$data);
+		echo json_encode($this->get_JSON($data['tags']));		
 	}
-	public function save() {
-		$tag = new Tag();
-		if(trim($this->input->post('id',TRUE)) != "")
-			$tag->id = $this->input->post('id',TRUE);
-		$tag->name = $this->input->post('name',TRUE);
-		if($tag->save()) {
-			redirect(site_url() . "/tags/",'location');
-		}
+
+
+	public function post_create(){
+                $tag = new Tag();
+                $this->save($tag);
+        }
+        public function put_update($id){
+                $tag = new Tag();
+                $tag->id = $id;
+                $this->save($tag);
+        }
+        private function save($tag) {
+                $post_data = $this->get_from_JSON();
+                $tag->name = $post_data['name'];
+		$tag->save();
 	}
+
 	public function add()
 	{
 		$data['type'] = "create";

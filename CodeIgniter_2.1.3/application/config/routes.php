@@ -44,15 +44,18 @@ $route['404_override'] = '';
 switch($_SERVER['REQUEST_METHOD']) {
 	case "GET":
 		$route['bookmarks'] = 'bookmarks/get_index';
+		$route['tags'] = 'tags/get_index';
 		$route['bookmarks/new'] = 'bookmarks/get_new';
 		$route['bookmarks/(:num)'] = "bookmarks/get_show/$1";
 		$route['bookmarks/(:num)/edit'] = "bookmarks/get_edit/$1";
 		break;
 	case "POST":
 		$route['bookmarks'] = 'bookmarks/post_create';
+		$route['tags'] = 'tags/post_create';
 		break;
 	case "PUT":
 		$route['bookmarks/(:num)'] = "bookmarks/put_update/$1";
+		$route['tags/(:num)'] = "tags/put_update/$1";
 		break;
 	case "DELETE":
 		$route['bookmarks/(:num)'] = "bookmarks/delete/$1";
