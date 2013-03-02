@@ -41,12 +41,26 @@
 $route['default_controller'] = "welcome";
 $route['404_override'] = '';
 
-$route['bookmarks'] = ($_SERVER['REQUEST_METHOD'] == 'GET') ? 'bookmarks/get_index' : 'bookmarks/post_create';
-$route['bookmarks/new'] = 'bookmarks/get_new';
-$route['bookmarks/(:num)'] = ($_SERVER['REQUEST_METHOD'] == 'GET') ? "bookmarks/get_show/$1" : "bookmarks/post_update/$1";
-$route['bookmarks/(:num)/edit'] = "bookmarks/get_edit/$1";
-$route['bookmarks/(:num)/confirm_delete'] = "bookmarks/post_confirm_delete/$1";
-$route['bookmarks/(:num)/delete'] = "bookmarks/post_delete/$1";
+switch($_SERVER['REQUEST_METHOD']) {
+	case "GET":
+		$route['bookmarks'] = 'bookmarks/get_index';
+		$route['bookmarks/new'] = 'bookmarks/get_new';
+		$route['bookmarks/(:num)'] = "bookmarks/get_show/$1";
+		$route['bookmarks/(:num)/edit'] = "bookmarks/get_edit/$1";
+		break;
+	case "POST":
+		$route['bookmarks'] = 'bookmarks/post_create';
+		break;
+	case "PUT":
+		$route['bookmarks/(:num)'] = "bookmarks/put_update/$1";
+		break;
+	case "DELETE":
+		$route['bookmarks/(:num)'] = "bookmarks/delete/$1";
+		break;
+}
+
+
+//$route['bookmarks/(:num)/confirm_delete'] = "bookmarks/post_confirm_delete/$1";
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

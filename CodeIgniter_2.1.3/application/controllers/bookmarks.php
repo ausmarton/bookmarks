@@ -17,31 +17,56 @@ class Bookmarks extends CI_Controller {
 		$this->load->view('bookmarks',$data);
 	}
 
+	private function get_JSON($bookmark_models) {
+		$bookmarks = array();
+		foreach($bookmark_models as $bookmark_model) {
+			$tags = array();
+			$tag_models = $bookmark_model->tag->get();
+			foreach($tag_models as $tag_model)
+				$tags[] = array(
+					'id' => $tag_model->id,
+					'name' => $tag_model->name
+				);
+			$bookmarks[] = array(
+				'id' => $bookmark_model->id,
+				'name' => $bookmark_model->name,
+				'url' => $bookmark_model->url,
+				'tags' => $tags
+			);
+		}
+		return $bookmarks;
+	}
+
 	public function get_index()
 	{
 		$bookmark = new Bookmark();
 		$data['bookmarks'] = $bookmark->get();
-		$this->load->view('bookmarks',$data);
+		echo json_encode($this->get_JSON($data['bookmarks']));
+		//$this->load->view('bookmarks',$data);
+	}
+	private function get_from_JSON() {
+		return json_decode(file_get_contents("php://input"), true);
 	}
 	public function post_create(){
 		$bookmark = new Bookmark();
 		$this->save($bookmark);
 	}
-	public function post_update($id){
+	public function put_update($id){
 		$bookmark = new Bookmark();
 		$bookmark->id = $id;
 		$this->save($bookmark);
 	}
 	private function save($bookmark) {
-		$bookmark->name = $this->input->post('name',TRUE);
-		$bookmark->url = $this->input->post('url',TRUE);
+		$post_data = $this->get_from_JSON();
+		$bookmark->name = $post_data['name'];
+		$bookmark->url = $post_data['url'];
 		if($bookmark->save()) {
 			$bookmark_model = new Bookmark();
 			$bookmark = $bookmark_model->get_by_id($bookmark->id);
 			$existing_tags = array();
 			foreach($bookmark->tag->get() as $tag)
 				$existing_tags[] = $tag->id;
-			$new_tags = $this->input->post('tags',TRUE);
+			$new_tags = $post_data['tags'];
 			$tags_to_be_removed = array_diff($existing_tags, $new_tags);				
 			$tags_to_be_added = array_diff($new_tags, $existing_tags);
 			foreach($tags_to_be_removed as $id) {
@@ -54,7 +79,7 @@ class Bookmarks extends CI_Controller {
 				$tag = $tag_model->where(array('id' => $id))->get();
 				$tag->save($bookmark);
 			}
-			redirect(site_url() . "/bookmarks/",'location');
+			//redirect(site_url() . "/bookmarks/",'location');
 		}
 	}
 
@@ -94,13 +119,12 @@ class Bookmarks extends CI_Controller {
 		$this->load->view('save_bookmark',$data);
 	}
 
-	public function post_delete($id)
+	public function delete($id)
 	{
 		$bookmark = new Bookmark();
 		$bookmark->id = $id;
-		if($bookmark->delete()) {
-			redirect(site_url() . "/bookmarks/",'location');
-		}
+		$bookmark->delete();
+			//redirect(site_url() . "/bookmarks/",'location');
 	}
 }
 

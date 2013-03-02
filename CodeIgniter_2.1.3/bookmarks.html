@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Bookmarks</title>
+  <link rel="stylesheet" href="/codeigniter/application/assets/bookmarks.css"/>
+</head>
+
+<body>
+
+  <div id="bookmarking">
+
+    <header id="header">
+	</header>
+
+    <section id="bookmarks">
+     
+    </section>
+
+  </div>
+
+  <div id="instructions">
+    Double-click to edit a todo.
+  </div>
+
+  <script src="/codeigniter/application/assets/js/json2.js"></script>
+  <script src="/codeigniter/application/assets/js/jquery-1.9.1.min.js"></script>
+  <script src="/codeigniter/application/assets/js/underscore-min.js"></script>
+  <script src="/codeigniter/application/assets/js/backbone-min.js"></script>
+  
+  <!-- Templates -->
+
+  <script type="text/template" id="bookmark-template">
+    <div class="view" >
+      <label><%- name %></label>
+      <a href="<%-url %>"><%- url %></a>
+    </div>
+	<div class="edit-bookmark">
+		
+	</div>
+  </script>
+
+<script type="text/template" id="edit-bookmark-template">
+		<input class="edit-name" type="text" placeholder="Bookmark Name" value="<%- name %>" />
+	    	<input class="edit-url" type="text" placeholder="Bookmark Url" value="<%- url %>" />
+		<button class="save">Save</button>
+		<button class="delete">Delete</button>
+</script>
+
+<script src="/codeigniter/application/assets/js/bookmarks.js"></script>
+
+  </body>
+</html>
