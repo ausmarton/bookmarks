@@ -12,14 +12,13 @@
   <div id="bookmarking">
 
     <header id="header">
-	</header>
-<h2 class="bookmarks">Bookmarks</h2><h2 class="all-tags">All Tags</h2>
+    </header>
+    <h2 class="bookmarks">Bookmarks</h2><h2 class="all-tags">All Tags</h2>
     <section id="bookmarks">
-     
     </section>
 
-	<section id="all-tags">
-	</section>
+    <section id="all-tags">
+    </section>
 
   </div>
 
@@ -31,38 +30,37 @@
   <script src="/codeigniter/application/assets/js/jquery-1.9.1.min.js"></script>
   <script src="/codeigniter/application/assets/js/underscore-min.js"></script>
   <script src="/codeigniter/application/assets/js/backbone-min.js"></script>
-  
-  <!-- Templates -->
+	<script src="/codeigniter/application/assets/js/backbone-relational.js"></script>
+<!-- Templates -->
 
   <script type="text/template" id="bookmark-template">
     <div class="view" >
       <label><%- name %></label>
-      <a href="<%-url %>"><%- url %></a>
+        <a href="<%-url %>"><%- url %></a>
+      </div>
+			<ul class="tags"></ul>
+    <div class="edit-bookmark">
     </div>
-	<div class="edit-bookmark">
-		
-	</div>
   </script>
 
-<script type="text/template" id="tag-view-template">
-	<p class="tag-view" href="<%- id %>"><%- name %></p>
-<div class="edit-tag-text">
-		
-	</div>
-</script>
+  <script type="text/template" id="tag-view-template">
+    <p class="tag-view" href="<%- id %>"><%- name %></p>
+    <div class="edit-tag-text">
+    </div>
+  </script>
 
-<script type="text/template" id="tag-edit-template">
-	<input class="edit-tag" type="text" placeholder="Tag Name" value="<%- name %>" />
-</script>
+  <script type="text/template" id="tag-edit-template">
+    <input class="edit-tag" type="text" placeholder="Tag Name" value="<%- name %>" />
+  </script>
 
-<script type="text/template" id="edit-bookmark-template">
-		<input class="edit-name" type="text" placeholder="Bookmark Name" value="<%- name %>" />
-	    	<input class="edit-url" type="text" placeholder="Bookmark Url" value="<%- url %>" />
-		<button class="save">Save</button>
-		<button class="delete">Delete</button>
-</script>
+  <script type="text/template" id="edit-bookmark-template">
+    <input class="edit-name" type="text" placeholder="Bookmark Name" value="<%- name %>" />
+    <input class="edit-url" type="text" placeholder="Bookmark Url" value="<%- url %>" />
+    <button class="save">Save</button>
+    <button class="delete">Delete</button>
+  </script>
 
-<script src="/codeigniter/application/assets/js/bookmarks.js"></script>
+  <script src="/codeigniter/application/assets/js/bookmarks.js"></script>
 
-  </body>
+</body>
 </html>
