@@ -11,10 +11,9 @@ To setup:
 
 To Do's
 
-1. Refactoring of php controllers to remove duplicates => get_JSON does not return JSON returns array instead
-2. Controller actions are not transactional
-3. Bookmarks mapping with tags not being persisted from REST-Api
-4. Search not implemented
+1. Refactoring of php controllers to remove duplicates
+2. Controller actions are not transactional 
+3. Search not implemented
 
 Workarounds
 
