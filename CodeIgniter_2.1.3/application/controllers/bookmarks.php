@@ -16,6 +16,10 @@ class Bookmarks extends CI_Controller {
 		$this->load->view('bookmarks',$data);
 	}
 
+	public function index() {
+		$this->load->view('bookmarks');
+	}
+
 	public function get_index()	{
 		$bookmark = new Bookmark();
 		$data['bookmarks'] = $bookmark->get();

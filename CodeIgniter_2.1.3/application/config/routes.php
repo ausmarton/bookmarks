@@ -38,7 +38,7 @@
 |
 */
 
-$route['default_controller'] = "welcome";
+$route['default_controller'] = "bookmarks";
 $route['404_override'] = '';
 
 switch($_SERVER['REQUEST_METHOD']) {

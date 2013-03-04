@@ -26,10 +26,6 @@
 
   </div>
 
-  <div id="instructions">
-    Double-click to edit a bookmark.
-  </div>
-
   <script src="/codeigniter/application/assets/js/json2.js"></script>
   <script src="/codeigniter/application/assets/js/jquery-1.9.1.min.js"></script>
   <script src="/codeigniter/application/assets/js/underscore-min.js"></script>

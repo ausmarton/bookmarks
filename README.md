@@ -7,7 +7,7 @@ To setup:
 3. Create a user called 'db_user' with password 'db_password' and grant it all privileges on bookmarking.*
 4. Make sure the db root user and password is setup properly in ./setup.sh
 5. execute ./setup.sh
-6. Try to access http://127.0.0.1/codeigniter/bookmarks.html
+6. Try to access http://127.0.0.1/codeigniter/
 
 To Do's
 
