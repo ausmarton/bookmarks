@@ -105,14 +105,14 @@ $(function(){
     saveTag:function () {
       if(this.model.isNew()) {
         this.model.set({
-          name:$('header .edit-tag:first').val(),				  	
+          name:$('header .edit-tag:first').val().trim().toLowerCase(),				  	
         });
         app.allTags.create(this.model);
         this.model = new Tag();
         this.render();
       } else {
         this.model.set({
-          name:$(this.el).children('.edit-tag').val()
+          name:$(this.el).children('.edit-tag').val().trim().toLowerCase()
         });							
         this.model.save();
       }
@@ -131,22 +131,25 @@ $(function(){
 
 	var AddTagView = TagView.extend({
 		events: {
-      "keypress .edit-tag"  : "updateOnEnter"
+      "keypress .edit-tag"  : "updateOnEnter",
+      "blur .edit-tag"  : "close"
     },
 
 		saveTag:function () {
-			var tag_name = $(this.el).children('.edit-tag').val();
-			var matching_tags = app.allTags.where({name: tag_name});
-			if(matching_tags.length == 0) {
-				this.model = new Tag();
-        this.model.set({
-          name:tag_name, 	
-        });
-      } else {
-				this.model = matching_tags[0];
-      }
-			this.bookmark.get('tags').push(this.model);
-			this.bookmark.save();
+			var tag_name = $(this.el).children('.edit-tag').val().trim().toLowerCase();
+			if(tag_name != "") {
+				var matching_tags = app.allTags.where({name: tag_name});
+				if(matching_tags.length == 0) {
+					this.model = new Tag();
+		      this.model.set({
+		        name:tag_name, 	
+		      });
+		    } else {
+					this.model = matching_tags[0];
+		    }
+				this.bookmark.get('tags').push(this.model);
+				this.bookmark.save();
+			}
 			this.bookmarkListItemView.render();
     },
 
@@ -155,6 +158,7 @@ $(function(){
     },
 
     close:function () {
+    	this.saveTag();
       $(this.el).unbind();
       $(this.el).empty();
     }
@@ -217,7 +221,7 @@ $(function(){
 
     events:{
       "dblclick .view":"showEdit",
-			"dblclick .add-tag":"showAddTag"
+			"click .add-tag":"showAddTag"
     },
 
     showAddTag: function() {
@@ -225,6 +229,7 @@ $(function(){
 			this.showAddTag.bookmark = this.model;
 			this.showAddTag.bookmarkListItemView = this;
 			$(this.el).children('.add-tag').html(this.showAddTag.render().el);
+			$(this.showAddTag.el).children('input').focus();
     },
 
     showEdit: function() {
@@ -274,8 +279,8 @@ $(function(){
 
     saveBookmark:function () {
       this.model.set({
-        name:$('header .edit-name:first').val(),
-        url:$('header .edit-url:first').val()
+        name:$('header .edit-name:first').val().trim().toLowerCase(),
+        url:$('header .edit-url:first').val().trim().toLowerCase()
       });
       app.bookmarks.create(this.model);
       this.model = new Bookmark();
@@ -307,8 +312,8 @@ $(function(){
 
     saveBookmark:function () {
       this.model.set({
-        name:$(this.el).children('.edit-name').val(),
-        url:$(this.el).children('.edit-url').val()
+        name:$(this.el).children('.edit-name').val().trim().toLowerCase(),
+        url:$(this.el).children('.edit-url').val().trim().toLowerCase()
       });							
       this.model.save();
       return false;

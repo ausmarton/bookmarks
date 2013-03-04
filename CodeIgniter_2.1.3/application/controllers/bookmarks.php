@@ -48,9 +48,9 @@ class Bookmarks extends CI_Controller {
 			foreach($applicable_tags as $tag_array) {
 				$tag_model = new Tag();
 				if(trim($tag_array['id']) == "") {
-					$tag_model->name = $tag_array['name'];
+					$tag_model->name = strtolower($tag_array['name']);
 					$tag_model->save();
-					$tag = $tag_model->where(array('name' => $tag_array['name']))->get();
+					$tag = $tag_model->where(array('name' => strtolower($tag_array['name'])))->get();
 				} else
 					$tag = $tag_model->where(array('id' => $tag_array['id']))->get();
 				if(in_array($tag_array,$new_tags)) {

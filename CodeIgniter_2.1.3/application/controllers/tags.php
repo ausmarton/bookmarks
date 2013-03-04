@@ -9,7 +9,7 @@ class Tags extends CI_Controller {
 
 	private function save($tag) {
 		$post_data = get_JSON_HTTP_data();
-		$tag->name = $post_data['name'];
+		$tag->name = strtolower($post_data['name']);
 		$tag->save();
 		echo json_encode(tag_to_array($tag));
 	}

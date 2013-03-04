@@ -32,10 +32,10 @@ INSERT INTO bookmarking.bookmarks(name,url) VALUES("Second Bookmark","http://www
 INSERT INTO bookmarking.bookmarks(name,url) VALUES("Third Bookmark","http://www.bing.com/search");
 INSERT INTO bookmarking.bookmarks(name,url) VALUES("Fourth Bookmark","http://www.search.com/search");
 
-INSERT INTO bookmarking.tags(name) VALUES("Java");
-INSERT INTO bookmarking.tags(name) VALUES("PHP");
-INSERT INTO bookmarking.tags(name) VALUES("Cycling");
-INSERT INTO bookmarking.tags(name) VALUES("Database");
+INSERT INTO bookmarking.tags(name) VALUES("java");
+INSERT INTO bookmarking.tags(name) VALUES("php");
+INSERT INTO bookmarking.tags(name) VALUES("cycling");
+INSERT INTO bookmarking.tags(name) VALUES("database");
 
 INSERT INTO bookmarking.bookmarks_tags VALUES(1,1);
 INSERT INTO bookmarking.bookmarks_tags VALUES(1,2);

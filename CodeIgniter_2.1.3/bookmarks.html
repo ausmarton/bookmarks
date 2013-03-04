@@ -13,6 +13,10 @@
 		<h2>Add a new Bookmark</h2>
     <header id="header">
     </header>
+    <ul>
+    	<li>Double click on tags and bookmarks to edit them</li>
+    	<li>Use the "<span class="delete-mark">x</span>" and the "<span class="add-mark">+</span>" marks to add or delete tags from bookmarks</li>
+    </ul>
     <h2 class="bookmarks">Bookmarks</h2><h2 class="all-tags">All Tags</h2>
     <section id="bookmarks">
     </section>
@@ -38,14 +42,14 @@
         <a href="<%-url %>"><%- url %></a>
       </div>
 			<ul class="tags"></ul>
-			<div class="add-tag"><span>+</span> Tag</div>
+			<div class="add-tag"><span class="add-mark">+</span> Tag</div>
     <div class="edit-bookmark">
     </div>
   </script>
 
   <script type="text/template" id="tag-view-template">
     <p class="tag-view" href="<%- id %>"><%- name %></p>
-    <div class="remove-tag">x</div>
+    <div class="remove-tag delete-mark">x</div>
     <div class="edit-tag-text">
     </div>
   </script>

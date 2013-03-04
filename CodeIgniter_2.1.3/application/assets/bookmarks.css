@@ -167,11 +167,6 @@ body {
 	padding: 0 0.4em;
 }
 
-#bookmarks li .add-tag span {
-	color: #2C2;
-	font-weight: bold;
-}
-
 #bookmarks li .tags {
 	padding: 0;
 	display: inline-block;
@@ -183,15 +178,23 @@ body {
 	margin-right: 3px;
 }
 
-#bookmarks li .tags li .remove-tag {
+.add-mark {
+	color: #2C2;
+	font-weight: bold;
+}
+
+.delete-mark {
 	color: #C22;
+	font-weight: bold;
+}
+
+#bookmarks li .tags li .remove-tag {
 	position: absolute;
 	display: inline-block;
 	top: 0;
 	right: 3px;
 	line-height: 1em;
 	font-style: normal;
-	font-weight: bold;
 	text-decoration: none;
 	cursor: pointer;
 }
