@@ -7,7 +7,7 @@ class Bookmarks extends CI_Controller {
 		$this->load->model('Bookmark');
 		$this->load->model('Tag');
   }
-	//TODO:
+	//TODO: Change this for REST
 	public function tag($tag_name) {
 		$tag_model = new Tag();
 		$tag_model->where(array('name' => $tag_name));
@@ -15,44 +15,11 @@ class Bookmarks extends CI_Controller {
 		$data['bookmarks'] = $tag->bookmark->get();
 		$this->load->view('bookmarks',$data);
 	}
-//TODO: MERGE WITH TAG CONTROLLER
-	private function tag_to_array($tag) {
-		return array('id' => $tag->id, 'name' => $tag->name);
-	}
-
-	private function tags_to_array($tag_models) {
-		$tags = array();
-		foreach($tag_models as $tag_model) {
-			$tags[] = $this->tag_to_array($tag_model);
-		}
-		return $tags;
-	}
-
-	private function bookmark_to_array($bookmark_model) {
-		return array(
-				'id' => $bookmark_model->id,
-				'name' => $bookmark_model->name,
-				'url' => $bookmark_model->url,
-				'tags' => $this->tags_to_array($bookmark_model->tag->get()),
-			);
-	}
-
-	private function bookmarks_to_array($bookmark_models) {
-		$bookmarks = array();
-		foreach($bookmark_models as $bookmark_model) {
-			$bookmarks[] = $this->bookmark_to_array($bookmark_model);
-		}
-		return $bookmarks;
-	}
 
 	public function get_index()	{
 		$bookmark = new Bookmark();
 		$data['bookmarks'] = $bookmark->get();
-		echo json_encode($this->bookmarks_to_array($data['bookmarks']));
-	}
-
-	private function get_from_JSON() {
-		return json_decode(file_get_contents("php://input"), true);
+		echo json_encode(bookmarks_to_array($data['bookmarks']));
 	}
 
 	public function post_create() {
@@ -67,7 +34,7 @@ class Bookmarks extends CI_Controller {
 	}
 
 	private function save($bookmark) {
-		$post_data = $this->get_from_JSON();
+		$post_data = get_JSON_HTTP_data();
 		$bookmark->name = $post_data['name'];
 		$bookmark->url = $post_data['url'];
 		if($bookmark->save()) {
@@ -75,7 +42,7 @@ class Bookmarks extends CI_Controller {
 			$bookmark = $bookmark_model->get_by_id($bookmark->id);
 			$existing_tags = array();
 			foreach($bookmark->tag->get() as $tag)
-				$existing_tags[] = $this->tag_to_array($tag);
+				$existing_tags[] = tag_to_array($tag);
 			$new_tags = $post_data['tags'];
 			$applicable_tags = $new_tags+$existing_tags;
 			foreach($applicable_tags as $tag_array) {
@@ -93,17 +60,8 @@ class Bookmarks extends CI_Controller {
 				}
 			}
 			$bookmark = $bookmark->where(array('id' => $bookmark->id))->get();
-			echo json_encode($this->bookmark_to_array($bookmark));
+			echo json_encode(bookmark_to_array($bookmark));
 		}
-	}
-
-	public function get_new()	{
-		$data['type'] = "create";
-		$data['name'] = "";
-		$data['url'] = "";
-		$data['all_tags'] = $this->all_available_tags_for_dropdown();
-		$data['tags'] = array();
-		$this->load->view('save_bookmark',$data);
 	}
 
 	private function all_available_tags_for_dropdown() {
@@ -114,28 +72,9 @@ class Bookmarks extends CI_Controller {
 		return $all_tags;	
 	}
 
-	public function get_edit($id)	{
-		$data['type'] = "edit";
-		$this->load->model('bookmark');
-		$bookmark_model = new Bookmark();
-		$bookmark = $bookmark_model->get_by_id($id);
-
-		$tags = array();
-		foreach($bookmark->tag->get() as $tag)
-			$tags[] = $tag->id;
-		$data['tags'] = $tags;
-		$data['all_tags'] = $this->all_available_tags_for_dropdown();
-
-		$data['id'] = $bookmark->id;
-		$data['name'] = $bookmark->name;
-		$data['url'] = $bookmark->url;
-		$this->load->view('save_bookmark',$data);
-	}
-
 	public function delete($id)	{
 		$bookmark = new Bookmark();
 		$bookmark->id = $id;
 		$bookmark->delete();
-		//redirect(site_url() . "/bookmarks/",'location');
 	}
 }

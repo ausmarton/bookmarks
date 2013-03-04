@@ -107,7 +107,7 @@ $(function(){
         this.model.set({
           name:$('header .edit-tag:first').val(),				  	
         });
-        app.allTags.create(this.model, {wait: true});
+        app.allTags.create(this.model);
         this.model = new Tag();
         this.render();
       } else {
@@ -147,6 +147,7 @@ $(function(){
       }
 			this.bookmark.get('tags').push(this.model);
 			this.bookmark.save();
+			this.bookmarkListItemView.render();
     },
 
 		updateOnEnter: function(e) {
@@ -222,6 +223,7 @@ $(function(){
     showAddTag: function() {
 			this.showAddTag = new AddTagView({model: new Tag()});
 			this.showAddTag.bookmark = this.model;
+			this.showAddTag.bookmarkListItemView = this;
 			$(this.el).children('.add-tag').html(this.showAddTag.render().el);
     },
 
@@ -275,7 +277,7 @@ $(function(){
         name:$('header .edit-name:first').val(),
         url:$('header .edit-url:first').val()
       });
-      app.bookmarks.create(this.model, {wait: true});
+      app.bookmarks.create(this.model);
       this.model = new Bookmark();
       this.render();
       return false;
