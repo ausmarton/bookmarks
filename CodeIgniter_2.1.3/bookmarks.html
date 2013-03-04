@@ -10,7 +10,7 @@
 <body>
 
   <div id="bookmarking">
-
+		<h2>Add a new Bookmark</h2>
     <header id="header">
     </header>
     <h2 class="bookmarks">Bookmarks</h2><h2 class="all-tags">All Tags</h2>
@@ -30,7 +30,6 @@
   <script src="/codeigniter/application/assets/js/jquery-1.9.1.min.js"></script>
   <script src="/codeigniter/application/assets/js/underscore-min.js"></script>
   <script src="/codeigniter/application/assets/js/backbone-min.js"></script>
-	<script src="/codeigniter/application/assets/js/backbone-relational.js"></script>
 <!-- Templates -->
 
   <script type="text/template" id="bookmark-template">
@@ -39,13 +38,14 @@
         <a href="<%-url %>"><%- url %></a>
       </div>
 			<ul class="tags"></ul>
-			<div class="add-tag">+ Tag</div>
+			<div class="add-tag"><span>+</span> Tag</div>
     <div class="edit-bookmark">
     </div>
   </script>
 
   <script type="text/template" id="tag-view-template">
     <p class="tag-view" href="<%- id %>"><%- name %></p>
+    <div class="remove-tag">x</div>
     <div class="edit-tag-text">
     </div>
   </script>
@@ -57,8 +57,10 @@
   <script type="text/template" id="edit-bookmark-template">
     <input class="edit-name" type="text" placeholder="Bookmark Name" value="<%- name %>" />
     <input class="edit-url" type="text" placeholder="Bookmark Url" value="<%- url %>" />
-    <button class="save">Save</button>
-    <button class="delete">Delete</button>
+    <div>
+    	<button class="save">Save</button>
+    	<button class="delete">Delete</button>
+    </div>
   </script>
 
   <script src="/codeigniter/application/assets/js/bookmarks.js"></script>

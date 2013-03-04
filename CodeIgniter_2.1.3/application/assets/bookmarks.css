@@ -39,12 +39,11 @@ body {
 }
 
 #bookmarking input[type="text"] {
-	font-size: 24px;
 	font-family: inherit;
 	line-height: 1.4em;
 	border: 0;
 	outline: none;
-	padding: 6px;
+	padding: 2px;
 	border: 1px solid #999999;
 	-webkit-box-shadow: rgba(0, 0, 0, 0.2) 0 1px 2px 0 inset;
 	-moz-box-shadow: rgba(0, 0, 0, 0.2) 0 1px 2px 0 inset;
@@ -168,6 +167,11 @@ body {
 	padding: 0 0.4em;
 }
 
+#bookmarks li .add-tag span {
+	color: #2C2;
+	font-weight: bold;
+}
+
 #bookmarks li .tags {
 	padding: 0;
 	display: inline-block;
@@ -176,6 +180,24 @@ body {
 #bookmarks li .tags li p {
 	margin: 0;
 	line-height: 1.5em;
+	margin-right: 3px;
+}
+
+#bookmarks li .tags li .remove-tag {
+	color: #C22;
+	position: absolute;
+	display: inline-block;
+	top: 0;
+	right: 3px;
+	line-height: 1em;
+	font-style: normal;
+	font-weight: bold;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+#all-tags li .remove-tag {
+	display: none;
 }
 
 #instructions {

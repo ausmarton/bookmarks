@@ -50,9 +50,20 @@ $(function(){
     template:_.template($('#tag-view-template').html()),
 
     events:{
-      "dblclick .tag-view"  : "showEdit"
+      "dblclick .tag-view"  : "showEdit",
+      "click .remove-tag" : "removeTag"
     },
-    
+
+		removeTag: function() {
+			if(this.bookmark != undefined) {
+				var existing_tags = this.bookmark.get('tags');
+				existing_tags.splice(existing_tags.indexOf(this.model),1);
+				this.bookmark.set({tags: existing_tags});
+				this.bookmark.save();
+				this.close();
+			}
+		},
+
     showEdit: function() {
       this.editTag = new TagView({model: this.model});
       $(this.el).children('.edit-tag-text').html(this.editTag.render().el);
@@ -96,17 +107,16 @@ $(function(){
         this.model.set({
           name:$('header .edit-tag:first').val(),				  	
         });
-        app.allTags.create(this.model);
+        app.allTags.create(this.model, {wait: true});
         this.model = new Tag();
         this.render();
-        return false;
       } else {
         this.model.set({
           name:$(this.el).children('.edit-tag').val()
         });							
         this.model.save();
-        return false;
       }
+      return false;
     },
     
     updateOnEnter: function(e) {
@@ -120,30 +130,25 @@ $(function(){
   });
 
 	var AddTagView = TagView.extend({
-		render:function (eventName) {
-      $(this.el).html(this.template(this.model.toJSON()));
-      return this;
-    },
 		events: {
       "keypress .edit-tag"  : "updateOnEnter"
     },
+
 		saveTag:function () {
 			var tag_name = $(this.el).children('.edit-tag').val();
 			var matching_tags = app.allTags.where({name: tag_name});
-			var tag;			
 			if(matching_tags.length == 0) {
+				this.model = new Tag();
         this.model.set({
-          name:tag_name,				  	
+          name:tag_name, 	
         });
-        tag = app.allTags.create(this.model, {wait: true});
-        console.log(app.allTags);
-				this.render();
       } else {
-				tag = matching_tags[0];
+				this.model = matching_tags[0];
       }
-			this.bookmark.get('tags').push(tag);
+			this.bookmark.get('tags').push(this.model);
 			this.bookmark.save();
     },
+
 		updateOnEnter: function(e) {
       if (e.keyCode == 13) this.saveTag();
     },
@@ -235,7 +240,9 @@ $(function(){
       $(this.el).html(this.template(this.model.toJSON()));
 			for(var index in this.tags) {
 				var tag = app.allTags.get(this.tags[index]['id']);
-				this.$('.tags').append(new TagListItemView({model:tag}).render().el);
+				var tagListItemView = new TagListItemView({model:tag});
+				tagListItemView.bookmark = this.model;
+				this.$('.tags').append(tagListItemView.render().el);
 			}
       return this;
     },
@@ -268,7 +275,7 @@ $(function(){
         name:$('header .edit-name:first').val(),
         url:$('header .edit-url:first').val()
       });
-      app.bookmarks.create(this.model);
+      app.bookmarks.create(this.model, {wait: true});
       this.model = new Bookmark();
       this.render();
       return false;
