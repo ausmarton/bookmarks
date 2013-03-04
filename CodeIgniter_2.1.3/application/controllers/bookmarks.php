@@ -44,7 +44,7 @@ class Bookmarks extends CI_Controller {
 			foreach($bookmark->tag->get() as $tag)
 				$existing_tags[] = tag_to_array($tag);
 			$new_tags = $post_data['tags'];
-			$applicable_tags = $new_tags+$existing_tags;
+			$applicable_tags = array_merge_recursive($new_tags,$existing_tags);
 			foreach($applicable_tags as $tag_array) {
 				$tag_model = new Tag();
 				if(trim($tag_array['id']) == "") {

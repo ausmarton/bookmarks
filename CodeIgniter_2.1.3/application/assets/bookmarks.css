@@ -92,12 +92,15 @@ body {
 #all-tags li,
 #bookmarks li {
 	list-style-type: none;
-	padding: 18px 20px 18px 0;
+	padding: 18px 0;
 	position: relative;
 	font-size: 24px;
 	border-bottom: 1px solid #cccccc;
 }
 
+#all-tags li {
+	padding: 0;
+}
 
 #all-tags li:last-child,
 #bookmarks li:last-child {
@@ -172,7 +175,7 @@ body {
 	display: inline-block;
 }
 
-#bookmarks li .tags li p {
+li p {
 	margin: 0;
 	line-height: 1.5em;
 	margin-right: 3px;
@@ -188,7 +191,7 @@ body {
 	font-weight: bold;
 }
 
-#bookmarks li .tags li .remove-tag {
+li .remove-tag {
 	position: absolute;
 	display: inline-block;
 	top: 0;
@@ -197,10 +200,6 @@ body {
 	font-style: normal;
 	text-decoration: none;
 	cursor: pointer;
-}
-
-#all-tags li .remove-tag {
-	display: none;
 }
 
 #instructions {

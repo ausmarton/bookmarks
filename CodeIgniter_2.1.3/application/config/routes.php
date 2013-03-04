@@ -59,6 +59,7 @@ switch($_SERVER['REQUEST_METHOD']) {
 		break;
 	case "DELETE":
 		$route['bookmarks/(:num)'] = "bookmarks/delete/$1";
+		$route['tags/(:num)'] = "tags/delete/$1";
 		break;
 }
 

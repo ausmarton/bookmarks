@@ -57,10 +57,15 @@ $(function(){
 		removeTag: function() {
 			if(this.bookmark != undefined) {
 				var existing_tags = this.bookmark.get('tags');
-				existing_tags.splice(existing_tags.indexOf(this.model),1);
+				for(var index in existing_tags)
+					if(existing_tags[index].id == this.model.attributes.id &&
+					existing_tags[index].name == this.model.attributes.name)
+						existing_tags.splice(index,1);
 				this.bookmark.set({tags: existing_tags});
 				this.bookmark.save();
 				this.close();
+			} else {
+				this.model.destroy();
 			}
 		},
 

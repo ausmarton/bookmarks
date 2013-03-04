@@ -31,11 +31,9 @@ class Tags extends CI_Controller {
 		$this->save($tag);
 	}
 
-	public function remove($id) {
+	public function delete($id) {
 		$tag = new Tag();
-		$tag->id = $this->uri->segment(3);
-		if($tag->delete()) {
-			redirect(site_url() . "/tags/",'location');
-		}
+		$tag->id = $id;
+		$tag->delete();
 	}
 }
